@@ -1,0 +1,86 @@
+[
+    {
+        "name": "Python",
+        "icon": "https://img.icons8.com/color/48/000000/python--v1.png"
+    },
+    {
+        "name": "SQL",
+        "icon": "https://img.icons8.com/color/48/000000/sql.png"
+    },
+    {
+        "name": "Power BI",
+        "icon": "https://img.icons8.com/color/48/000000/power-bi.png"
+    },
+    {
+        "name": "Excel",
+        "icon": "https://img.icons8.com/color/48/000000/microsoft-excel-2019--v1.png"
+    },
+    {
+        "name": "TensorFlow",
+        "icon": "https://img.icons8.com/color/48/000000/tensorflow.png"
+    },
+    {
+        "name": "Keras",
+        "icon": "https://upload.wikimedia.org/wikipedia/commons/thumb/a/ae/Keras_logo.svg/48px-Keras_logo.svg.png"
+    },
+    {
+        "name": "Flutter",
+        "icon": "https://img.icons8.com/color/48/000000/flutter.png"
+    },
+    {
+        "name": "Dart",
+        "icon": "https://img.icons8.com/color/48/000000/dart.png"
+    },
+    {
+        "name": "Firebase",
+        "icon": "https://img.icons8.com/color/48/000000/firebase.png"
+    },
+    {
+        "name": "C++",
+        "icon": "https://img.icons8.com/color/48/000000/c-plus-plus-logo.png"
+    },
+    {
+        "name": "HTML5",
+        "icon": "https://img.icons8.com/color/48/000000/html-5--v1.png"
+    },
+    {
+        "name": "CSS3",
+        "icon": "https://img.icons8.com/color/48/000000/css3.png"
+    },
+    {
+        "name": "JavaScript",
+        "icon": "https://img.icons8.com/color/48/000000/javascript--v1.png"
+    },
+    {
+        "name": "Machine Learning",
+        "icon": "https://img.icons8.com/color/48/000000/artificial-intelligence.png"
+    },
+    {
+        "name": "Deep Learning",
+        "icon": "https://img.icons8.com/?size=48&id=4dqHoNQ5CC3L&format=gif&color=f7f7f7"
+    },
+    {
+        "name": "NLP",
+        "icon": "https://img.icons8.com/?size=48&id=aHClp8f4SBQL&format=png&color=FFFFFF"
+    },
+    {
+        "name": "Computer Vision",
+        "icon": "https://img.icons8.com/?size=48&id=HmVEHUWVK3M8&format=png&color=FFFFFF"
+    },
+    {
+        "name": "Data Visualization",
+        "icon": "https://img.icons8.com/color/48/000000/combo-chart--v1.png"
+    },
+    {
+        "name": "Data Analysis",
+        "icon": "https://img.icons8.com/color/48/000000/data-configuration.png"
+    },
+    {
+        "name": "Git",
+        "icon": "https://img.icons8.com/color/48/000000/git.png"
+    },
+    {
+        "name": "GitHub",
+        "icon": "https://img.icons8.com/glyph-neue/48/ffffff/github.png"
+    }
+]
