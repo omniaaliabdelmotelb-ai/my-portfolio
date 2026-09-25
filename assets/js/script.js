@@ -220,8 +220,21 @@ async function fetchData(type = "skills") {
 
     // Try to sync latest data from Firebase Firestore
     if (typeof syncFromCloud === 'function') {
-        const cloudData = await syncFromCloud(type);
+        let cloudData = await syncFromCloud(type);
         if (cloudData !== null) {
+            if (type === "projects") {
+                const clean = sanitizeProjects(cloudData);
+                if (clean.length !== cloudData.length) {
+                    cloudData = clean;
+                    if (typeof syncToCloud === 'function') syncToCloud("projects", clean);
+                }
+            } else if (type === "experience") {
+                const clean = sanitizeExperience(cloudData);
+                if (clean.length !== cloudData.length) {
+                    cloudData = clean;
+                    if (typeof syncToCloud === 'function') syncToCloud("experience", clean);
+                }
+            }
             localStorage.setItem(`omnia_portfolio_${type}`, JSON.stringify(cloudData));
             return cloudData;
         }
@@ -232,16 +245,35 @@ async function fetchData(type = "skills") {
         return localInfo !== null ? JSON.parse(localInfo) : DEFAULT_INFO;
     } else if (type === "experience") {
         const localExp = localStorage.getItem("omnia_portfolio_experience");
-        return localExp !== null ? JSON.parse(localExp) : DEFAULT_EXPERIENCE;
+        let parsed = localExp !== null ? JSON.parse(localExp) : DEFAULT_EXPERIENCE;
+        return sanitizeExperience(parsed);
     } else if (type === "education") {
         const localEdu = localStorage.getItem("omnia_portfolio_education");
         return localEdu !== null ? JSON.parse(localEdu) : DEFAULT_EDUCATION;
     } else {
         const localProjects = localStorage.getItem("omnia_portfolio_projects");
-        if (localProjects !== null) return JSON.parse(localProjects);
+        if (localProjects !== null) {
+            const parsed = JSON.parse(localProjects);
+            const clean = sanitizeProjects(parsed);
+            if (clean.length !== parsed.length) {
+                localStorage.setItem("omnia_portfolio_projects", JSON.stringify(clean));
+                if (typeof syncToCloud === 'function') syncToCloud("projects", clean);
+            }
+            return clean;
+        }
         const response = await fetch("./projects/projects.json");
         return await response.json();
     }
+}
+
+function sanitizeProjects(list) {
+    if (!Array.isArray(list)) return [];
+    return list.filter(p => p && p.name && !p.name.includes("TAQA GAS") && !p.name.includes("Customer Churn"));
+}
+
+function sanitizeExperience(list) {
+    if (!Array.isArray(list)) return [];
+    return list.filter(e => e && e.company && e.company !== "TAQA Gas" && e.company !== "INSTANT" && !e.company.includes("Zewail"));
 }
 
 function showInfo(info) {

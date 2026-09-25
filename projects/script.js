@@ -119,18 +119,33 @@ document.addEventListener('visibilitychange', function () {
 
 
 // fetch projects start
+function sanitizeProjects(list) {
+    if (!Array.isArray(list)) return [];
+    return list.filter(p => p && p.name && !p.name.includes("TAQA GAS") && !p.name.includes("Customer Churn"));
+}
+
 async function getProjects() {
     if (typeof syncFromCloud === 'function') {
-        const cloudData = await syncFromCloud("projects");
+        let cloudData = await syncFromCloud("projects");
         if (cloudData !== null && Array.isArray(cloudData)) {
-            localStorage.setItem("omnia_portfolio_projects", JSON.stringify(cloudData));
-            return cloudData;
+            const clean = sanitizeProjects(cloudData);
+            if (clean.length !== cloudData.length && typeof syncToCloud === 'function') {
+                syncToCloud("projects", clean);
+            }
+            localStorage.setItem("omnia_portfolio_projects", JSON.stringify(clean));
+            return clean;
         }
     }
     const localProjects = localStorage.getItem("omnia_portfolio_projects");
     if (localProjects !== null) {
         try {
-            return JSON.parse(localProjects);
+            const parsed = JSON.parse(localProjects);
+            const clean = sanitizeProjects(parsed);
+            if (clean.length !== parsed.length) {
+                localStorage.setItem("omnia_portfolio_projects", JSON.stringify(clean));
+                if (typeof syncToCloud === 'function') syncToCloud("projects", clean);
+            }
+            return clean;
         } catch (e) {
             console.error("Error parsing local projects:", e);
         }
@@ -138,8 +153,9 @@ async function getProjects() {
     return fetch("projects.json")
         .then(response => response.json())
         .then(data => {
-            localStorage.setItem("omnia_portfolio_projects", JSON.stringify(data));
-            return data;
+            const clean = sanitizeProjects(data);
+            localStorage.setItem("omnia_portfolio_projects", JSON.stringify(clean));
+            return clean;
         });
 }
 
