@@ -44,7 +44,7 @@ const DEFAULTS = {
         { name: "Power BI", icon: "https://img.icons8.com/color/48/000000/power-bi.png" },
         { name: "Excel", icon: "https://img.icons8.com/color/48/000000/microsoft-excel-2019--v1.png" },
         { name: "TensorFlow", icon: "https://img.icons8.com/color/48/000000/tensorflow.png" },
-        { name: "Keras", icon: "https://cdn.jsdelivr.net/gh/simple-icons/simple-icons/icons/keras.svg" },
+        { name: "Keras", icon: "https://img.icons8.com/?size=48&id=n3vom66l1I6x&format=png" },
         { name: "Flutter", icon: "https://img.icons8.com/color/48/000000/flutter.png" },
         { name: "Dart", icon: "https://img.icons8.com/color/48/000000/dart.png" },
         { name: "Firebase", icon: "https://img.icons8.com/color/48/000000/firebase.png" },
