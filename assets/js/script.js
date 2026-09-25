@@ -187,47 +187,9 @@ const DEFAULT_INFO = {
     }
 };
 
-const DEFAULT_EXPERIENCE = [
-    {
-        company: "TAQA Gas",
-        role: "Data Analyst & BI Trainee",
-        period: "Corporate Training Program",
-        desc: "Corporate Training Program focusing on Data Analysis and BI Dashboards."
-    },
-    {
-        company: "ITI (Information Technology Institute)",
-        role: "Mobile Application Developer | Training",
-        period: "Flutter & Dart Development with Firebase",
-        desc: "Flutter & Dart Development with Firebase real-time integration."
-    },
-    {
-        company: "INSTANT",
-        role: "AI & Machine Learning | Diploma",
-        period: "Advanced AI Training Program",
-        desc: "Advanced AI Training Program & Machine Learning Models."
-    },
-    {
-        company: "Zewail City",
-        role: "AI & Machine Learning | Diploma",
-        period: "AI Training Program",
-        desc: "Practical AI Training and Deep Learning."
-    }
-];
+const DEFAULT_EXPERIENCE = [];
 
-const DEFAULT_EDUCATION = [
-    {
-        title: "Bachelor's Degree in AI & Data Science",
-        institution: "Faculty of AI & Data Science | Beni Suef National University",
-        period: "Sept 2022 - June 2026",
-        image: "./assets/images/educat/college.jpg"
-    },
-    {
-        title: "AI & Machine Learning Diploma",
-        institution: "Zewail City of Science and Technology",
-        period: "Completed | AI Training",
-        image: "./assets/images/educat/school.jpg"
-    }
-];
+const DEFAULT_EDUCATION = [];
 
 async function fetchData(type = "skills") {
     if (type === "skills") {
@@ -237,31 +199,23 @@ async function fetchData(type = "skills") {
         }
         if (!skillsData) {
             const localSkills = localStorage.getItem("omnia_portfolio_skills");
-            if (localSkills) skillsData = JSON.parse(localSkills);
+            if (localSkills !== null) {
+                try {
+                    skillsData = JSON.parse(localSkills);
+                } catch (e) {
+                    console.error("Error parsing local skills:", e);
+                }
+            }
         }
-        if (skillsData && Array.isArray(skillsData)) {
-            skillsData = skillsData.filter(s => s.name !== "Keras");
-            localStorage.setItem("omnia_portfolio_skills", JSON.stringify(skillsData));
-        }
-        const hasCSharp = skillsData && skillsData.some(s => s.name === "C#");
-        if (!skillsData || !hasCSharp || skillsData.length < 24) {
+        if (!skillsData) {
             try {
                 const response = await fetch("skills.json");
                 skillsData = await response.json();
-                skillsData = skillsData.filter(s => s.name !== "Keras");
-                localStorage.setItem("omnia_portfolio_skills", JSON.stringify(skillsData));
-                if (typeof syncToCloud === 'function') {
-                    syncToCloud("skills", skillsData);
-                }
             } catch (e) {
-                console.warn("Could not load skills.json", e);
-            }
-        } else {
-            if (typeof syncToCloud === 'function') {
-                syncToCloud("skills", skillsData);
+                skillsData = [];
             }
         }
-        return skillsData;
+        return skillsData || [];
     }
 
     // Try to sync latest data from Firebase Firestore
@@ -344,6 +298,10 @@ function showInfo(info) {
 function showExperience(experienceList) {
     const timelineContainer = document.querySelector(".experience .timeline");
     if (!timelineContainer) return;
+    if (!experienceList || experienceList.length === 0) {
+        timelineContainer.innerHTML = `<div style="text-align: center; color: #94a3b8; padding: 2.5rem; font-size: 1.5rem; width: 100%;">No experience added yet. Add experience from the Admin panel! ✨</div>`;
+        return;
+    }
     let html = "";
     experienceList.forEach((exp, idx) => {
         const sideClass = idx % 2 === 0 ? "right" : "left";
@@ -367,6 +325,10 @@ function showExperience(experienceList) {
 function showEducation(educationList) {
     const eduContainer = document.querySelector(".education .box-container");
     if (!eduContainer) return;
+    if (!educationList || educationList.length === 0) {
+        eduContainer.innerHTML = `<div style="text-align: center; color: #94a3b8; padding: 2.5rem; font-size: 1.5rem; width: 100%;">No education added yet. Add education from the Admin panel! ✨</div>`;
+        return;
+    }
     let html = "";
     educationList.forEach(edu => {
         let imgSrc = edu.image.startsWith("http") || edu.image.startsWith("data:")
@@ -390,6 +352,10 @@ function showEducation(educationList) {
 function showSkills(skills) {
     let skillsContainer = document.getElementById("skillsContainer");
     if (!skillsContainer) return;
+    if (!skills || skills.length === 0) {
+        skillsContainer.innerHTML = `<div style="text-align: center; color: #94a3b8; padding: 2.5rem; font-size: 1.5rem; width: 100%;">No skills added yet. Add skills from the Admin panel! ✨</div>`;
+        return;
+    }
     let skillHTML = "";
     skills.forEach(skill => {
         let iconSrc = skill.icon.startsWith("http") || skill.icon.startsWith("data:")

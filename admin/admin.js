@@ -13,43 +13,9 @@ const KEYS = {
 // Fallback Defaults
 const DEFAULTS = {
     PROJECTS: [],
-    EXPERIENCE: [
-        { company: "TAQA Gas", role: "Data Analyst & BI Trainee", period: "Corporate Training Program", desc: "Corporate Training Program focusing on Data Analysis and BI Dashboards." },
-        { company: "ITI (Information Technology Institute)", role: "Mobile Application Developer | Training", period: "Flutter & Dart Development with Firebase", desc: "Flutter & Dart Development with Firebase real-time integration." },
-        { company: "INSTANT", role: "AI & Machine Learning | Diploma", period: "Advanced AI Training Program", desc: "Advanced AI Training Program & Machine Learning Models." },
-        { company: "Zewail City", role: "AI & Machine Learning | Diploma", period: "AI Training Program", desc: "Practical AI Training and Deep Learning." }
-    ],
-    EDUCATION: [
-        { title: "Bachelor's Degree in AI & Data Science", institution: "Faculty of AI & Data Science | Beni Suef National University", period: "Sept 2022 - June 2026", image: "./assets/images/educat/college.jpg" },
-        { title: "AI & Machine Learning Diploma", institution: "Zewail City of Science and Technology", period: "Completed | AI Training", image: "./assets/images/educat/school.jpg" }
-    ],
-    SKILLS: [
-        { name: "C#", icon: "https://img.icons8.com/color/48/000000/c-sharp-logo.png" },
-        { name: ".NET Core", icon: "https://img.icons8.com/color/48/000000/net-framework.png" },
-        { name: "ASP.NET Core", icon: "https://img.icons8.com/color/48/000000/code.png" },
-        { name: "REST API", icon: "https://img.icons8.com/color/48/000000/api.png" },
-        { name: "Python", icon: "https://img.icons8.com/color/48/000000/python--v1.png" },
-        { name: "SQL", icon: "https://img.icons8.com/color/48/000000/sql.png" },
-        { name: "Power BI", icon: "https://img.icons8.com/color/48/000000/power-bi.png" },
-        { name: "Excel", icon: "https://img.icons8.com/color/48/000000/microsoft-excel-2019--v1.png" },
-        { name: "TensorFlow", icon: "https://img.icons8.com/color/48/000000/tensorflow.png" },
-
-        { name: "Flutter", icon: "https://img.icons8.com/color/48/000000/flutter.png" },
-        { name: "Dart", icon: "https://img.icons8.com/color/48/000000/dart.png" },
-        { name: "Firebase", icon: "https://img.icons8.com/color/48/000000/firebase.png" },
-        { name: "C++", icon: "https://img.icons8.com/color/48/000000/c-plus-plus-logo.png" },
-        { name: "HTML5", icon: "https://img.icons8.com/color/48/000000/html-5--v1.png" },
-        { name: "CSS3", icon: "https://img.icons8.com/color/48/000000/css3.png" },
-        { name: "JavaScript", icon: "https://img.icons8.com/color/48/000000/javascript--v1.png" },
-        { name: "Machine Learning", icon: "https://img.icons8.com/color/48/000000/artificial-intelligence.png" },
-        { name: "Deep Learning", icon: "https://img.icons8.com/?size=48&id=4dqHoNQ5CC3L&format=gif&color=f7f7f7" },
-        { name: "NLP", icon: "https://img.icons8.com/?size=48&id=aHClp8f4SBQL&format=png&color=FFFFFF" },
-        { name: "Computer Vision", icon: "https://img.icons8.com/?size=48&id=HmVEHUWVK3M8&format=png&color=FFFFFF" },
-        { name: "Data Visualization", icon: "https://img.icons8.com/color/48/000000/combo-chart--v1.png" },
-        { name: "Data Analysis", icon: "https://img.icons8.com/color/48/000000/data-configuration.png" },
-        { name: "Git", icon: "https://img.icons8.com/color/48/000000/git.png" },
-        { name: "GitHub", icon: "https://img.icons8.com/glyph-neue/48/ffffff/github.png" }
-    ],
+    EXPERIENCE: [],
+    EDUCATION: [],
+    SKILLS: [],
     INFO: {
         name: "Omnia Ali Abdelmotleb",
         title: "Data Analyst & Software Engineer",

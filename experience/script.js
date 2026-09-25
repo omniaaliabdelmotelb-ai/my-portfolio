@@ -104,12 +104,7 @@ window.onclick = function (event) {
         handleFormSubmit(this, modal);
     });
 
-const DEFAULT_EXP = [
-    { company: "TAQA Gas", role: "Data Analyst & BI Trainee", period: "Corporate Training Program", desc: "Corporate Training Program focusing on Data Analysis and BI Dashboards." },
-    { company: "ITI (Information Technology Institute)", role: "Mobile Application Developer | Training", period: "Flutter & Dart Development with Firebase", desc: "Flutter & Dart Development with Firebase real-time integration." },
-    { company: "INSTANT", role: "AI & Machine Learning | Diploma", period: "Advanced AI Training Program", desc: "Advanced AI Training Program & Machine Learning Models." },
-    { company: "Zewail City", role: "AI & Machine Learning | Diploma", period: "AI Training Program", desc: "Practical AI Training and Deep Learning." }
-];
+const DEFAULT_EXP = [];
 
 async function getExperienceData() {
     if (typeof syncFromCloud === 'function') {
@@ -127,6 +122,10 @@ async function showExperiencePage() {
     const timelineContainer = document.querySelector(".experience .timeline");
     if (!timelineContainer) return;
     const expList = await getExperienceData();
+    if (!expList || expList.length === 0) {
+        timelineContainer.innerHTML = `<div style="text-align: center; color: #94a3b8; padding: 2.5rem; font-size: 1.5rem; width: 100%;">No experience added yet. Add experience from the Admin panel! ✨</div>`;
+        return;
+    }
     let html = "";
     expList.forEach((exp, idx) => {
         const sideClass = idx % 2 === 0 ? "right" : "left";
