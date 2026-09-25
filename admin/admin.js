@@ -70,7 +70,7 @@ const DEFAULTS = {
         title: "Data Analyst & Software Engineer",
         bio: "I am a dual-skilled professional specializing in Data Analysis and Software Engineering. Currently studying at the Faculty of AI & Data Science, Beni Suef National University. I am passionate about transforming complex data into actionable insights and supporting data-driven decision-making.",
         degree: "Bachelor's in AI & Data Science",
-        phone: "+20 1000000000",
+        phone: "+20 11 11394981",
         email: "oa741536@gmail.com",
         location: "Cairo, Egypt",
         resume: "#",
@@ -78,7 +78,8 @@ const DEFAULTS = {
             linkedin: "https://www.linkedin.com/",
             github: "https://github.com/",
             kaggle: "https://www.kaggle.com/",
-            telegram: "https://t.me/"
+            whatsapp: "https://wa.me/201111394981",
+            telegram: "https://t.me/+201111394981"
         }
     },
     CLOUDINARY: {
@@ -692,10 +693,11 @@ function renderInfo() {
     document.getElementById("info-res").value = info.resume || "";
 
     if (info.social) {
-        document.getElementById("social-linkedin").value = info.social.linkedin || "";
-        document.getElementById("social-github").value = info.social.github || "";
-        document.getElementById("social-kaggle").value = info.social.kaggle || "";
-        document.getElementById("social-telegram").value = info.social.telegram || "";
+        if (document.getElementById("social-linkedin")) document.getElementById("social-linkedin").value = info.social.linkedin || "";
+        if (document.getElementById("social-github")) document.getElementById("social-github").value = info.social.github || "";
+        if (document.getElementById("social-kaggle")) document.getElementById("social-kaggle").value = info.social.kaggle || "";
+        if (document.getElementById("social-whatsapp")) document.getElementById("social-whatsapp").value = info.social.whatsapp || "https://wa.me/201111394981";
+        if (document.getElementById("social-telegram")) document.getElementById("social-telegram").value = info.social.telegram || "https://t.me/+201111394981";
     }
 }
 
@@ -712,10 +714,11 @@ function initInfoManager() {
             location: document.getElementById("info-loc").value.trim(),
             resume: document.getElementById("info-res").value.trim() || "#",
             social: {
-                linkedin: document.getElementById("social-linkedin").value.trim(),
-                github: document.getElementById("social-github").value.trim(),
-                kaggle: document.getElementById("social-kaggle").value.trim(),
-                telegram: document.getElementById("social-telegram").value.trim()
+                linkedin: document.getElementById("social-linkedin") ? document.getElementById("social-linkedin").value.trim() : "",
+                github: document.getElementById("social-github") ? document.getElementById("social-github").value.trim() : "",
+                kaggle: document.getElementById("social-kaggle") ? document.getElementById("social-kaggle").value.trim() : "",
+                whatsapp: document.getElementById("social-whatsapp") ? document.getElementById("social-whatsapp").value.trim() : "https://wa.me/201111394981",
+                telegram: document.getElementById("social-telegram") ? document.getElementById("social-telegram").value.trim() : "https://t.me/+201111394981"
             }
         };
         setData(KEYS.INFO, info);

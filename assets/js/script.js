@@ -174,7 +174,7 @@ const DEFAULT_INFO = {
     title: "Data Analyst & Software Engineer",
     bio: "I am a dual-skilled professional specializing in Data Analysis and Software Engineering. Currently studying at the Faculty of AI & Data Science, Beni Suef National University. I am passionate about transforming complex data into actionable insights and supporting data-driven decision-making. With expertise in Power BI, SQL, Python, and AI/ML frameworks, combined with mobile and web development skills, I don't just analyze data—I build the tools to visualize and leverage it.",
     degree: "Bachelor's in AI & Data Science",
-    phone: "+20 1000000000",
+    phone: "+20 11 11394981",
     email: "oa741536@gmail.com",
     location: "Cairo, Egypt",
     resume: "#",
@@ -182,7 +182,8 @@ const DEFAULT_INFO = {
         linkedin: "https://www.linkedin.com/",
         github: "https://github.com/",
         kaggle: "https://www.kaggle.com/",
-        telegram: "https://t.me/"
+        whatsapp: "https://wa.me/201111394981",
+        telegram: "https://t.me/+201111394981"
     }
 };
 
@@ -316,6 +317,9 @@ function showInfo(info) {
     if (placeElem && info.location) placeElem.textContent = info.location;
 
     // Footer Contact Info
+    const footerPhone = document.getElementById("footer-phone");
+    if (footerPhone && info.phone) footerPhone.textContent = info.phone;
+
     const footerEmail = document.getElementById("footer-email");
     if (footerEmail && info.email) footerEmail.textContent = info.email;
 
@@ -331,7 +335,8 @@ function showInfo(info) {
         document.querySelectorAll(".social-icons .linkedin, .share .fa-linkedin").forEach(el => el.href = info.social.linkedin || "#");
         document.querySelectorAll(".social-icons .github, .share .fa-github").forEach(el => el.href = info.social.github || "#");
         document.querySelectorAll(".social-icons .kaggle, .share .fa-kaggle").forEach(el => el.href = info.social.kaggle || "#");
-        document.querySelectorAll(".social-icons .telegram, .share .fa-telegram-plane").forEach(el => el.href = info.social.telegram || "#");
+        document.querySelectorAll(".social-icons .whatsapp, .share .fa-whatsapp").forEach(el => el.href = info.social.whatsapp || "https://wa.me/201111394981");
+        document.querySelectorAll(".social-icons .telegram, .share .fa-telegram-plane").forEach(el => el.href = info.social.telegram || "https://t.me/+201111394981");
         document.querySelectorAll(".share .fa-envelope").forEach(el => el.href = `mailto:${info.email}`);
     }
 }
