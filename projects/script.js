@@ -71,9 +71,9 @@ window.onclick = function (event) {
             }).catch(e => console.warn("Firestore message save warning:", e));
         }
 
-        // 2. Direct Email Delivery to omniaaliabdelmotelb@gmail.com via FormSubmit AJAX
+        // 2. Direct Email Delivery to oa741536@gmail.com via FormSubmit AJAX
         try {
-            await fetch("https://formsubmit.co/ajax/omniaaliabdelmotelb@gmail.com", {
+            await fetch("https://formsubmit.co/ajax/oa741536@gmail.com", {
                 method: "POST",
                 headers: {
                     'Content-Type': 'application/json',

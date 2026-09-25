@@ -71,7 +71,7 @@ const DEFAULTS = {
         bio: "I am a dual-skilled professional specializing in Data Analysis and Software Engineering. Currently studying at the Faculty of AI & Data Science, Beni Suef National University. I am passionate about transforming complex data into actionable insights and supporting data-driven decision-making.",
         degree: "Bachelor's in AI & Data Science",
         phone: "+20 1000000000",
-        email: "omniaaliabdelmotelb@gmail.com",
+        email: "oa741536@gmail.com",
         location: "Cairo, Egypt",
         resume: "#",
         social: {
@@ -872,7 +872,7 @@ async function renderMessages() {
 function addTestAdminMessage() {
     const demo = {
         name: "Omnia Ali (Test Visitor)",
-        email: "omniaaliabdelmotelb@gmail.com",
+        email: "oa741536@gmail.com",
         phone: "+20 1000000000",
         message: "Hello! This is a test message to verify the Admin Messages table layout.",
         createdAt: new Date().toISOString()
