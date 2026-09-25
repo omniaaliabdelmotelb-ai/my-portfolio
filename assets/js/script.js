@@ -180,6 +180,30 @@ const DEFAULT_EDUCATION = [
 ];
 
 async function fetchData(type = "skills") {
+    if (type === "skills") {
+        let skillsData = null;
+        if (typeof syncFromCloud === 'function') {
+            skillsData = await syncFromCloud("skills");
+        }
+        if (!skillsData) {
+            const localSkills = localStorage.getItem("omnia_portfolio_skills");
+            if (localSkills) skillsData = JSON.parse(localSkills);
+        }
+        if (!skillsData || skillsData.length < 20) {
+            try {
+                const response = await fetch("skills.json");
+                skillsData = await response.json();
+                localStorage.setItem("omnia_portfolio_skills", JSON.stringify(skillsData));
+                if (typeof syncToCloud === 'function') {
+                    syncToCloud("skills", skillsData);
+                }
+            } catch (e) {
+                console.warn("Could not load skills.json", e);
+            }
+        }
+        return skillsData;
+    }
+
     // Try to sync latest data from Firebase Firestore
     if (typeof syncFromCloud === 'function') {
         const cloudData = await syncFromCloud(type);
@@ -198,11 +222,6 @@ async function fetchData(type = "skills") {
     } else if (type === "education") {
         const localEdu = localStorage.getItem("omnia_portfolio_education");
         return localEdu ? JSON.parse(localEdu) : DEFAULT_EDUCATION;
-    } else if (type === "skills") {
-        const localSkills = localStorage.getItem("omnia_portfolio_skills");
-        if (localSkills) return JSON.parse(localSkills);
-        const response = await fetch("skills.json");
-        return await response.json();
     } else {
         const localProjects = localStorage.getItem("omnia_portfolio_projects");
         if (localProjects) return JSON.parse(localProjects);
