@@ -98,7 +98,7 @@ $(document).ready(function () {
 document.addEventListener('visibilitychange', function () {
     if (document.visibilityState === "visible") {
         document.title = "Welcome Back! 👋 | Omnia Ali Abdelmotleb";
-        $("#favicon").attr("href", "./assets/images/favicon.png");
+        $("#favicon").attr("href", "./assets/images/hero.png");
         setTimeout(function () {
             document.title = "Portfolio | Omnia Ali Abdelmotleb";
         }, 3000);

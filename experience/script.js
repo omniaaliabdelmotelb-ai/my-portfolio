@@ -135,7 +135,7 @@ srtop.reveal('.experience .timeline', { delay: 400 });
 document.addEventListener('visibilitychange', function () {
     if (document.visibilityState === "visible") {
         document.title = "Welcome Back! 👋 | Experience - Omnia Ali";
-        $("#favicon").attr("href", "../assets/images/favicon.png");
+        $("#favicon").attr("href", "../assets/images/hero.png");
         setTimeout(function () {
             document.title = "Experience | Portfolio Omnia Ali Abdelmotleb";
         }, 3000);

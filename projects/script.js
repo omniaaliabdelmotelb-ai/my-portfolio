@@ -61,7 +61,7 @@ $("#floating-contact-form").submit(function (event) {
 document.addEventListener('visibilitychange', function () {
     if (document.visibilityState === "visible") {
         document.title = "Welcome Back! 👋 | Projects - Omnia Ali";
-        $("#favicon").attr("href", "../assets/images/favicon.png");
+        $("#favicon").attr("href", "../assets/images/hero.png");
         setTimeout(function () {
             document.title = "Projects | Portfolio Omnia Ali Abdelmotleb";
         }, 3000);
