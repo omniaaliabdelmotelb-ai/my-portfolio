@@ -813,12 +813,22 @@ async function renderMessages() {
             snap.forEach(doc => {
                 messages.push({ id: doc.id, ...doc.data() });
             });
-            // Sort client-side by date descending
-            messages.sort((a, b) => new Date(b.createdAt || 0) - new Date(a.createdAt || 0));
         } catch (err) {
             console.warn("Firestore fetch messages warning:", err);
         }
     }
+
+    try {
+        const localMsgs = JSON.parse(localStorage.getItem("omnia_portfolio_messages") || "[]");
+        localMsgs.forEach(lm => {
+            if (!messages.some(m => m.createdAt === lm.createdAt && m.email === lm.email)) {
+                messages.push(lm);
+            }
+        });
+    } catch (e) {}
+
+    // Sort client-side by date descending
+    messages.sort((a, b) => new Date(b.createdAt || 0) - new Date(a.createdAt || 0));
 
     if (badge) badge.textContent = messages.length;
 

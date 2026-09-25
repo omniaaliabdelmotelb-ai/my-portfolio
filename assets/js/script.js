@@ -57,7 +57,7 @@ $(document).ready(function () {
         const origBtnHtml = submitBtn.html();
         submitBtn.prop('disabled', true).html('إرسال... <i class="fas fa-spinner fa-spin"></i>');
 
-        // 1. Cloud Save Backup to Firebase Firestore
+        // 1. Cloud Save Backup to Firebase Firestore & LocalStorage
         if (typeof db !== 'undefined' && db) {
             db.collection("messages").add({
                 name: nameVal,
@@ -67,6 +67,18 @@ $(document).ready(function () {
                 createdAt: new Date().toISOString()
             }).catch(e => console.warn("Firestore message save warning:", e));
         }
+
+        try {
+            const existing = JSON.parse(localStorage.getItem("omnia_portfolio_messages") || "[]");
+            existing.unshift({
+                name: nameVal,
+                email: emailVal,
+                phone: phoneVal,
+                message: messageVal,
+                createdAt: new Date().toISOString()
+            });
+            localStorage.setItem("omnia_portfolio_messages", JSON.stringify(existing.slice(0, 50)));
+        } catch(e) {}
 
         // 2. Direct Email Delivery to oa741536@gmail.com via FormSubmit AJAX
         try {
