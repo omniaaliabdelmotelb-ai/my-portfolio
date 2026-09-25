@@ -246,6 +246,16 @@ async function fetchData(type = "skills") {
 
 function showInfo(info) {
     if (!info) return;
+
+    // Hero Name & Title
+    const heroNameElem = document.querySelector(".home .content h2");
+    if (heroNameElem && info.name) {
+        const parts = info.name.trim().split(" ");
+        const firstName = parts[0] || "";
+        const lastName = parts.slice(1).join(" ") || "";
+        heroNameElem.innerHTML = `Hi There,<br /> I'm ${firstName} ${lastName ? `<span>${lastName}</span>` : ''}`;
+    }
+
     // Name & Title
     const aboutTitleElem = document.querySelector(".about .content h3");
     if (aboutTitleElem && info.name) aboutTitleElem.textContent = `I'm ${info.name}`;
