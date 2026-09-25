@@ -58,15 +58,18 @@ $("#floating-contact-form").submit(function (event) {
     event.preventDefault();
 });
 
-document.addEventListener('visibilitychange',
-    function () {
-        if (document.visibilityState === "visible") {
+document.addEventListener('visibilitychange', function () {
+    if (document.visibilityState === "visible") {
+        document.title = "Welcome Back! 👋 | Projects - Omnia Ali";
+        $("#favicon").attr("href", "../assets/images/favicon.png");
+        setTimeout(function () {
             document.title = "Projects | Portfolio Omnia Ali Abdelmotleb";
-        }
-        else {
-            document.title = "Come Back To Portfolio ✨";
-        }
-    });
+        }, 3000);
+    } else {
+        document.title = "Come Back To Portfolio ✨";
+        $("#favicon").attr("href", "../assets/images/favhand1.png");
+    }
+});
 
 
 // fetch projects start

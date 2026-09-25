@@ -95,15 +95,18 @@ $(document).ready(function () {
 
 });
 
-document.addEventListener('visibilitychange',
-    function () {
-        if (document.visibilityState === "visible") {
+document.addEventListener('visibilitychange', function () {
+    if (document.visibilityState === "visible") {
+        document.title = "Welcome Back! 👋 | Omnia Ali Abdelmotleb";
+        $("#favicon").attr("href", "./assets/images/favicon.png");
+        setTimeout(function () {
             document.title = "Portfolio | Omnia Ali Abdelmotleb";
-        }
-        else {
-            document.title = "Come Back To Portfolio ✨";
-        }
-    });
+        }, 3000);
+    } else {
+        document.title = "Come Back To Portfolio ✨";
+        $("#favicon").attr("href", "./assets/images/favhand1.png");
+    }
+});
 
 
 // <!-- typed js effect starts -->

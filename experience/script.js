@@ -132,12 +132,15 @@ const srtop = ScrollReveal({
 
 srtop.reveal('.experience .timeline', { delay: 400 });
 
-document.addEventListener('visibilitychange',
-    function () {
-        if (document.visibilityState === "visible") {
+document.addEventListener('visibilitychange', function () {
+    if (document.visibilityState === "visible") {
+        document.title = "Welcome Back! 👋 | Experience - Omnia Ali";
+        $("#favicon").attr("href", "../assets/images/favicon.png");
+        setTimeout(function () {
             document.title = "Experience | Portfolio Omnia Ali Abdelmotleb";
-        }
-        else {
-            document.title = "Come Back To Portfolio ✨";
-        }
-    });
+        }, 3000);
+    } else {
+        document.title = "Come Back To Portfolio ✨";
+        $("#favicon").attr("href", "../assets/images/favhand1.png");
+    }
+});
