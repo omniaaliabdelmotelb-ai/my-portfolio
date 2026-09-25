@@ -10,7 +10,7 @@ from reportlab.lib.units import inch
 
 def generate_portfolio_pdf(pdf_path):
     # 1. Generate QR Code image for the portfolio URL
-    portfolio_url = "https://0mniaaliportfolio.vercel.app/"
+    portfolio_url = "https://omnia-ali-abdelmotleb.vercel.app/"
     qr = qrcode.QRCode(
         version=1,
         error_correction=qrcode.constants.ERROR_CORRECT_H,
@@ -172,7 +172,7 @@ def generate_portfolio_pdf(pdf_path):
     <b>Email:</b> <a href="mailto:oa741536@gmail.com"><font color="#06b6d4">oa741536@gmail.com</font></a><br/>
     <b>Phone:</b> <font color="#f8fafc">+20 11 11394981</font><br/>
     <b>Location:</b> <font color="#f8fafc">Cairo, Egypt</font><br/>
-    <b>Portfolio:</b> <a href="{portfolio_url}"><font color="#06b6d4">0mniaaliportfolio.vercel.app</font></a>
+    <b>Portfolio:</b> <a href="{portfolio_url}"><font color="#06b6d4">omnia-ali-abdelmotleb.vercel.app</font></a>
     """
 
     info_table_data = [
