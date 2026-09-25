@@ -80,9 +80,9 @@ $(document).ready(function () {
             localStorage.setItem("omnia_portfolio_messages", JSON.stringify(existing.slice(0, 50)));
         } catch(e) {}
 
-        // 2. Direct Email Delivery to oa741536@gmail.com via FormSubmit AJAX
+        // 2. Direct Email Delivery to omniaaliabdelmotelb@gmail.com via FormSubmit AJAX
         try {
-            await fetch("https://formsubmit.co/ajax/oa741536@gmail.com", {
+            await fetch("https://formsubmit.co/ajax/omniaaliabdelmotelb@gmail.com", {
                 method: "POST",
                 headers: {
                     'Content-Type': 'application/json',
@@ -175,7 +175,7 @@ const DEFAULT_INFO = {
     bio: "I am a dual-skilled professional specializing in Data Analysis and Software Engineering. Currently studying at the Faculty of AI & Data Science, Beni Suef National University. I am passionate about transforming complex data into actionable insights and supporting data-driven decision-making. With expertise in Power BI, SQL, Python, and AI/ML frameworks, combined with mobile and web development skills, I don't just analyze data—I build the tools to visualize and leverage it.",
     degree: "Bachelor's in AI & Data Science",
     phone: "+20 1000000000",
-    email: "oa741536@gmail.com",
+    email: "omniaaliabdelmotelb@gmail.com",
     location: "Cairo, Egypt",
     resume: "#",
     social: {
