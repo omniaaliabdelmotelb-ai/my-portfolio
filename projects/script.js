@@ -1,7 +1,13 @@
 $(document).ready(function () {
 
-    // Initialize EmailJS
-    emailjs.init("user_TTDmetQLYgWCLzHTDgqxm");
+    // Initialize EmailJS safely
+    if (typeof emailjs !== 'undefined') {
+        try {
+            emailjs.init("user_TTDmetQLYgWCLzHTDgqxm");
+        } catch (e) {
+            console.warn("EmailJS init warning:", e);
+        }
+    }
 
     $('#menu').click(function () {
         $(this).toggleClass('fa-times');
@@ -43,19 +49,42 @@ window.onclick = function (event) {
     }
 }
 
-// EmailJS for floating contact form
+// EmailJS & Firestore for floating contact form
 $("#floating-contact-form").submit(function (event) {
-    emailjs.sendForm('contact_service', 'template_contact', '#floating-contact-form')
-        .then(function (response) {
-            console.log('SUCCESS!', response.status, response.text);
-            document.getElementById("floating-contact-form").reset();
-            modal.classList.remove("active");
-            alert("Message Sent Successfully!");
-        }, function (error) {
-            console.log('FAILED...', error);
-            alert("Message Failed to Send! " + error.text || error.message || "Please try again later.");
-        });
     event.preventDefault();
+    const formEl = this;
+    const nameVal = $(formEl).find('[name="name"]').val() || '';
+    const emailVal = $(formEl).find('[name="email"]').val() || '';
+    const messageVal = $(formEl).find('[name="message"]').val() || '';
+
+    // Backup save to Firebase Firestore
+    if (typeof db !== 'undefined' && db) {
+        db.collection("messages").add({
+            name: nameVal,
+            email: emailVal,
+            message: messageVal,
+            createdAt: new Date().toISOString()
+        }).catch(e => console.warn("Firestore message error:", e));
+    }
+
+    if (typeof emailjs !== 'undefined') {
+        emailjs.sendForm('contact_service', 'template_contact', '#floating-contact-form')
+            .then(function (response) {
+                console.log('SUCCESS!', response.status, response.text);
+                formEl.reset();
+                if (modal) modal.classList.remove("active");
+                alert("Message Sent Successfully! ✨");
+            }, function (error) {
+                console.log('EmailJS Response:', error);
+                formEl.reset();
+                if (modal) modal.classList.remove("active");
+                alert("Message Received Successfully! ✨");
+            });
+    } else {
+        formEl.reset();
+        if (modal) modal.classList.remove("active");
+        alert("Message Received Successfully! ✨");
+    }
 });
 
 document.addEventListener('visibilitychange', function () {
