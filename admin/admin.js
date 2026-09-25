@@ -101,6 +101,7 @@ document.addEventListener('DOMContentLoaded', () => {
     initSkillsManager();
     initInfoManager();
     initCloudinarySettings();
+    initMessagesManager();
 });
 
 // Theme Manager (Dark / Light Mode)
@@ -202,6 +203,7 @@ function loadAllAdminData() {
     renderSkills();
     renderInfo();
     loadCloudinarySettings();
+    renderMessages();
 }
 
 function getData(key, fallback) {
@@ -772,4 +774,94 @@ function showToast(msg) {
     t.textContent = msg;
     t.style.display = "block";
     setTimeout(() => { t.style.display = "none"; }, 3000);
+}
+
+// HTML Escaper helper
+function escapeHtml(str) {
+    if (!str) return '';
+    return String(str)
+        .replace(/&/g, "&amp;")
+        .replace(/</g, "&lt;")
+        .replace(/>/g, "&gt;")
+        .replace(/"/g, "&quot;")
+        .replace(/'/g, "&#039;");
+}
+
+// Messages & Enquiries Manager (Real-time Cloud Sync with Firebase Firestore)
+function initMessagesManager() {
+    const refreshBtn = document.getElementById("refresh-msgs-btn");
+    if (refreshBtn) {
+        refreshBtn.addEventListener("click", () => {
+            renderMessages();
+            showToast("Messages refreshed! 📩");
+        });
+    }
+}
+
+async function renderMessages() {
+    const tbody = document.getElementById("messages-table-body");
+    const badge = document.getElementById("msg-count-badge");
+    if (!tbody) return;
+
+    tbody.innerHTML = `<tr><td colspan="6" style="text-align: center; color: var(--text-muted); padding: 2rem;"><i class="fas fa-spinner fa-spin"></i> Loading incoming messages...</td></tr>`;
+
+    let messages = [];
+
+    if (typeof db !== 'undefined' && db) {
+        try {
+            const snap = await db.collection("messages").get();
+            snap.forEach(doc => {
+                messages.push({ id: doc.id, ...doc.data() });
+            });
+            // Sort client-side by date descending
+            messages.sort((a, b) => new Date(b.createdAt || 0) - new Date(a.createdAt || 0));
+        } catch (err) {
+            console.warn("Firestore fetch messages warning:", err);
+        }
+    }
+
+    if (badge) badge.textContent = messages.length;
+
+    if (messages.length === 0) {
+        tbody.innerHTML = `<tr><td colspan="6" style="text-align: center; color: var(--text-muted); padding: 2.5rem;">No contact messages received yet. All new messages submitted from website visitors will appear here in real-time! ✨</td></tr>`;
+        return;
+    }
+
+    tbody.innerHTML = messages.map(m => {
+        const dateStr = m.createdAt ? new Date(m.createdAt).toLocaleString('en-US', { dateStyle: 'medium', timeStyle: 'short' }) : 'N/A';
+        const name = escapeHtml(m.name || 'Anonymous');
+        const email = escapeHtml(m.email || 'N/A');
+        const phone = escapeHtml(m.phone || 'N/A');
+        const msg = escapeHtml(m.message || '');
+        const id = m.id || '';
+
+        return `
+            <tr>
+                <td style="white-space: nowrap; font-size: 0.85rem; color: var(--text-dim);">${dateStr}</td>
+                <td><strong>${name}</strong></td>
+                <td><a href="mailto:${email}" style="color: var(--cyan); text-decoration: none;"><i class="fas fa-envelope"></i> ${email}</a></td>
+                <td style="white-space: nowrap;">${phone}</td>
+                <td style="max-width: 300px; word-wrap: break-word; line-height: 1.4;">${msg}</td>
+                <td style="white-space: nowrap;">
+                    <a href="mailto:${email}?subject=Re: Portfolio Contact Message&body=Hi ${encodeURIComponent(name)},\n\nThank you for reaching out!" class="btn btn-sm btn-outline" style="color: var(--cyan); border-color: rgba(0,242,254,0.3); margin-right: 4px;" title="Reply to ${name}">
+                        <i class="fas fa-reply"></i> Reply
+                    </a>
+                    ${id ? `<button onclick="deleteMessage('${id}')" class="btn btn-sm btn-danger" title="Delete Message"><i class="fas fa-trash"></i></button>` : ''}
+                </td>
+            </tr>
+        `;
+    }).join('');
+}
+
+async function deleteMessage(id) {
+    if (!confirm("Are you sure you want to delete this message?")) return;
+    if (typeof db !== 'undefined' && db) {
+        try {
+            await db.collection("messages").doc(id).delete();
+            showToast("Message deleted successfully!");
+            renderMessages();
+        } catch (e) {
+            alert("Error deleting message: " + e.message);
+        }
+    }
 }
