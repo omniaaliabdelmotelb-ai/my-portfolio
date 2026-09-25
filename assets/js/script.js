@@ -177,7 +177,7 @@ const DEFAULT_INFO = {
     phone: "+20 11 11394981",
     email: "oa741536@gmail.com",
     location: "Cairo, Egypt",
-    resume: "#",
+    resume: "./assets/Omnia_Ali_Abdelmotleb_Portfolio.pdf",
     social: {
         linkedin: "https://www.linkedin.com/",
         github: "https://github.com/",
