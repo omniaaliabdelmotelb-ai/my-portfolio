@@ -46,16 +46,18 @@ $(document).ready(function () {
         }, 500, 'linear')
     });
 
-    // <!-- emailjs and firestore to mail contact form data -->
-    $("#contact-form").submit(function (event) {
-        event.preventDefault();
-        const formEl = this;
+    // Helper function to submit contact form data to Gmail & Firestore
+    async function handleFormSubmit(formEl, modalEl) {
         const nameVal = $(formEl).find('[name="name"]').val() || '';
         const emailVal = $(formEl).find('[name="email"]').val() || '';
         const phoneVal = $(formEl).find('[name="phone"]').val() || '';
         const messageVal = $(formEl).find('[name="message"]').val() || '';
 
-        // Backup save to Firebase Firestore
+        const submitBtn = $(formEl).find('button[type="submit"]');
+        const origBtnHtml = submitBtn.html();
+        submitBtn.prop('disabled', true).html('إرسال... <i class="fas fa-spinner fa-spin"></i>');
+
+        // 1. Cloud Save Backup to Firebase Firestore
         if (typeof db !== 'undefined' && db) {
             db.collection("messages").add({
                 name: nameVal,
@@ -63,24 +65,40 @@ $(document).ready(function () {
                 phone: phoneVal,
                 message: messageVal,
                 createdAt: new Date().toISOString()
-            }).catch(e => console.warn("Firestore message error:", e));
+            }).catch(e => console.warn("Firestore message save warning:", e));
         }
 
-        if (typeof emailjs !== 'undefined') {
-            emailjs.sendForm('contact_service', 'template_contact', '#contact-form')
-                .then(function (response) {
-                    console.log('SUCCESS!', response.status, response.text);
-                    formEl.reset();
-                    alert("شكراً لك! تم إرسال رسالتك بنجاح ✨\nThank you! Your message has been sent successfully.");
-                }, function (error) {
-                    console.log('EmailJS Response:', error);
-                    formEl.reset();
-                    alert("تم استلام رسالتك بنجاح! ✨\nThank you! Your message has been received.");
-                });
-        } else {
-            formEl.reset();
-            alert("تم استلام رسالتك بنجاح! ✨\nThank you! Your message has been received.");
+        // 2. Direct Email Delivery to oa741536@gmail.com via FormSubmit AJAX
+        try {
+            await fetch("https://formsubmit.co/ajax/oa741536@gmail.com", {
+                method: "POST",
+                headers: {
+                    'Content-Type': 'application/json',
+                    'Accept': 'application/json'
+                },
+                body: JSON.stringify({
+                    name: nameVal,
+                    email: emailVal,
+                    phone: phoneVal || 'N/A',
+                    message: messageVal,
+                    _subject: `📩 New Portfolio Message from ${nameVal}`,
+                    _template: "table"
+                })
+            });
+        } catch (err) {
+            console.warn("FormSubmit send error:", err);
         }
+
+        submitBtn.prop('disabled', false).html(origBtnHtml);
+        formEl.reset();
+        if (modalEl) modalEl.classList.remove("active");
+        alert("شكراً لك! تم إرسال رسالتك بنجاح إلى البريد الإلكتروني ✨\nThank you! Your message has been sent successfully.");
+    }
+
+    // Main Contact Form
+    $("#contact-form").submit(function (event) {
+        event.preventDefault();
+        handleFormSubmit(this, null);
     });
 
     // Floating Contact Modal Logic
@@ -106,42 +124,10 @@ $(document).ready(function () {
         }
     }
 
-    // EmailJS & Firestore for floating contact form
+    // Floating contact form submission
     $("#floating-contact-form").submit(function (event) {
         event.preventDefault();
-        const formEl = this;
-        const nameVal = $(formEl).find('[name="name"]').val() || '';
-        const emailVal = $(formEl).find('[name="email"]').val() || '';
-        const messageVal = $(formEl).find('[name="message"]').val() || '';
-
-        // Backup save to Firebase Firestore
-        if (typeof db !== 'undefined' && db) {
-            db.collection("messages").add({
-                name: nameVal,
-                email: emailVal,
-                message: messageVal,
-                createdAt: new Date().toISOString()
-            }).catch(e => console.warn("Firestore message error:", e));
-        }
-
-        if (typeof emailjs !== 'undefined') {
-            emailjs.sendForm('contact_service', 'template_contact', '#floating-contact-form')
-                .then(function (response) {
-                    console.log('SUCCESS!', response.status, response.text);
-                    formEl.reset();
-                    if (modal) modal.classList.remove("active");
-                    alert("Message Sent Successfully! ✨");
-                }, function (error) {
-                    console.log('EmailJS Response:', error);
-                    formEl.reset();
-                    if (modal) modal.classList.remove("active");
-                    alert("Message Received Successfully! ✨");
-                });
-        } else {
-            formEl.reset();
-            if (modal) modal.classList.remove("active");
-            alert("Message Received Successfully! ✨");
-        }
+        handleFormSubmit(this, modal);
     });
 
 });
