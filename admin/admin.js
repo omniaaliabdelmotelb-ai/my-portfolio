@@ -196,8 +196,28 @@ function initTabs() {
     });
 }
 
-// Data Loaders
-function loadAllAdminData() {
+async function loadAllAdminData() {
+    if (typeof syncFromCloud === 'function') {
+        try {
+            const cloudProj = await syncFromCloud("projects");
+            if (cloudProj !== null) localStorage.setItem(KEYS.PROJECTS, JSON.stringify(cloudProj));
+
+            const cloudExp = await syncFromCloud("experience");
+            if (cloudExp !== null) localStorage.setItem(KEYS.EXPERIENCE, JSON.stringify(cloudExp));
+
+            const cloudEdu = await syncFromCloud("education");
+            if (cloudEdu !== null) localStorage.setItem(KEYS.EDUCATION, JSON.stringify(cloudEdu));
+
+            const cloudSkills = await syncFromCloud("skills");
+            if (cloudSkills !== null) localStorage.setItem(KEYS.SKILLS, JSON.stringify(cloudSkills));
+
+            const cloudInfo = await syncFromCloud("info");
+            if (cloudInfo !== null) localStorage.setItem(KEYS.INFO, JSON.stringify(cloudInfo));
+        } catch (e) {
+            console.warn("Cloud sync error on admin load:", e);
+        }
+    }
+
     renderProjects();
     renderExperience();
     renderEducation();
@@ -209,7 +229,7 @@ function loadAllAdminData() {
 
 function getData(key, fallback) {
     const item = localStorage.getItem(key);
-    return item ? JSON.parse(item) : fallback;
+    return item !== null ? JSON.parse(item) : fallback;
 }
 
 function setData(key, data) {
@@ -385,7 +405,7 @@ function initProjectsManager() {
     document.getElementById("proj-cancel-btn").addEventListener("click", resetProjForm);
     document.getElementById("reset-projects-btn").addEventListener("click", () => {
         if (confirm("Reset projects to default?")) {
-            localStorage.removeItem(KEYS.PROJECTS);
+            setData(KEYS.PROJECTS, DEFAULTS.PROJECTS);
             renderProjects();
             showToast("Projects reset to default!");
         }
@@ -474,7 +494,7 @@ function initExperienceManager() {
     document.getElementById("exp-cancel-btn").addEventListener("click", resetExpForm);
     document.getElementById("reset-exp-btn").addEventListener("click", () => {
         if (confirm("Reset experience to default?")) {
-            localStorage.removeItem(KEYS.EXPERIENCE);
+            setData(KEYS.EXPERIENCE, DEFAULTS.EXPERIENCE);
             renderExperience();
             showToast("Experience reset to default!");
         }
@@ -561,7 +581,7 @@ function initEducationManager() {
     document.getElementById("edu-cancel-btn").addEventListener("click", resetEduForm);
     document.getElementById("reset-edu-btn").addEventListener("click", () => {
         if (confirm("Reset education to default?")) {
-            localStorage.removeItem(KEYS.EDUCATION);
+            setData(KEYS.EDUCATION, DEFAULTS.EDUCATION);
             renderEducation();
             showToast("Education reset to default!");
         }
@@ -645,7 +665,7 @@ function initSkillsManager() {
     document.getElementById("skill-cancel-btn").addEventListener("click", resetSkillForm);
     document.getElementById("reset-skills-btn").addEventListener("click", () => {
         if (confirm("Reset skills to default?")) {
-            localStorage.removeItem(KEYS.SKILLS);
+            setData(KEYS.SKILLS, DEFAULTS.SKILLS);
             renderSkills();
             showToast("Skills reset to default!");
         }

@@ -122,13 +122,13 @@ document.addEventListener('visibilitychange', function () {
 async function getProjects() {
     if (typeof syncFromCloud === 'function') {
         const cloudData = await syncFromCloud("projects");
-        if (cloudData) {
+        if (cloudData !== null && Array.isArray(cloudData)) {
             localStorage.setItem("omnia_portfolio_projects", JSON.stringify(cloudData));
             return cloudData;
         }
     }
     const localProjects = localStorage.getItem("omnia_portfolio_projects");
-    if (localProjects) {
+    if (localProjects !== null) {
         try {
             return JSON.parse(localProjects);
         } catch (e) {
@@ -138,7 +138,8 @@ async function getProjects() {
     return fetch("projects.json")
         .then(response => response.json())
         .then(data => {
-            return data
+            localStorage.setItem("omnia_portfolio_projects", JSON.stringify(data));
+            return data;
         });
 }
 
