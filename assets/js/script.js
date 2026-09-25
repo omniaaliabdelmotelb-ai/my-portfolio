@@ -189,7 +189,8 @@ async function fetchData(type = "skills") {
             const localSkills = localStorage.getItem("omnia_portfolio_skills");
             if (localSkills) skillsData = JSON.parse(localSkills);
         }
-        if (!skillsData || skillsData.length < 20) {
+        const hasCSharp = skillsData && skillsData.some(s => s.name === "C#");
+        if (!skillsData || !hasCSharp || skillsData.length < 25) {
             try {
                 const response = await fetch("skills.json");
                 skillsData = await response.json();
