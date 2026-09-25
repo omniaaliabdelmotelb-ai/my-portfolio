@@ -71,6 +71,7 @@ const DEFAULTS = {
 };
 
 document.addEventListener('DOMContentLoaded', () => {
+    initThemeManager();
     checkAuth();
     initAuthForm();
     initTabs();
@@ -82,6 +83,53 @@ document.addEventListener('DOMContentLoaded', () => {
     initInfoManager();
     initCloudinarySettings();
 });
+
+// Theme Manager (Dark / Light Mode)
+function initThemeManager() {
+    const savedTheme = localStorage.getItem("omnia_admin_theme") || "dark";
+    applyTheme(savedTheme);
+
+    const themeToggleBtn = document.getElementById("theme-toggle-btn");
+    const authThemeBtn = document.getElementById("auth-theme-btn");
+
+    function toggleTheme() {
+        const isLight = document.body.classList.contains("light-mode");
+        const newTheme = isLight ? "dark" : "light";
+        applyTheme(newTheme);
+        localStorage.setItem("omnia_admin_theme", newTheme);
+        showToast(`Switched to ${newTheme === "light" ? "Light" : "Dark"} Mode ✨`);
+    }
+
+    if (themeToggleBtn) {
+        themeToggleBtn.addEventListener("click", toggleTheme);
+    }
+    if (authThemeBtn) {
+        authThemeBtn.addEventListener("click", toggleTheme);
+    }
+}
+
+function applyTheme(theme) {
+    const themeToggleBtn = document.getElementById("theme-toggle-btn");
+    const authThemeBtn = document.getElementById("auth-theme-btn");
+
+    if (theme === "light") {
+        document.body.classList.add("light-mode");
+        if (themeToggleBtn) {
+            themeToggleBtn.innerHTML = `<i class="fas fa-moon"></i> <span id="theme-text">Dark Mode</span>`;
+        }
+        if (authThemeBtn) {
+            authThemeBtn.innerHTML = `<i class="fas fa-moon"></i>`;
+        }
+    } else {
+        document.body.classList.remove("light-mode");
+        if (themeToggleBtn) {
+            themeToggleBtn.innerHTML = `<i class="fas fa-sun"></i> <span id="theme-text">Light Mode</span>`;
+        }
+        if (authThemeBtn) {
+            authThemeBtn.innerHTML = `<i class="fas fa-sun"></i>`;
+        }
+    }
+}
 
 // Authentication
 function checkAuth() {
