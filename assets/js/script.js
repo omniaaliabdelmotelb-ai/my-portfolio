@@ -189,17 +189,26 @@ async function fetchData(type = "skills") {
             const localSkills = localStorage.getItem("omnia_portfolio_skills");
             if (localSkills) skillsData = JSON.parse(localSkills);
         }
+        if (skillsData && Array.isArray(skillsData)) {
+            skillsData = skillsData.filter(s => s.name !== "Keras");
+            localStorage.setItem("omnia_portfolio_skills", JSON.stringify(skillsData));
+        }
         const hasCSharp = skillsData && skillsData.some(s => s.name === "C#");
-        if (!skillsData || !hasCSharp || skillsData.length < 25) {
+        if (!skillsData || !hasCSharp || skillsData.length < 24) {
             try {
                 const response = await fetch("skills.json");
                 skillsData = await response.json();
+                skillsData = skillsData.filter(s => s.name !== "Keras");
                 localStorage.setItem("omnia_portfolio_skills", JSON.stringify(skillsData));
                 if (typeof syncToCloud === 'function') {
                     syncToCloud("skills", skillsData);
                 }
             } catch (e) {
                 console.warn("Could not load skills.json", e);
+            }
+        } else {
+            if (typeof syncToCloud === 'function') {
+                syncToCloud("skills", skillsData);
             }
         }
         return skillsData;
