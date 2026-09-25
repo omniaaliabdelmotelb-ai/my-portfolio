@@ -267,7 +267,7 @@ async function fetchData(type = "skills") {
     // Try to sync latest data from Firebase Firestore
     if (typeof syncFromCloud === 'function') {
         const cloudData = await syncFromCloud(type);
-        if (cloudData) {
+        if (cloudData !== null) {
             localStorage.setItem(`omnia_portfolio_${type}`, JSON.stringify(cloudData));
             return cloudData;
         }
@@ -275,16 +275,16 @@ async function fetchData(type = "skills") {
 
     if (type === "info") {
         const localInfo = localStorage.getItem("omnia_portfolio_info");
-        return localInfo ? JSON.parse(localInfo) : DEFAULT_INFO;
+        return localInfo !== null ? JSON.parse(localInfo) : DEFAULT_INFO;
     } else if (type === "experience") {
         const localExp = localStorage.getItem("omnia_portfolio_experience");
-        return localExp ? JSON.parse(localExp) : DEFAULT_EXPERIENCE;
+        return localExp !== null ? JSON.parse(localExp) : DEFAULT_EXPERIENCE;
     } else if (type === "education") {
         const localEdu = localStorage.getItem("omnia_portfolio_education");
-        return localEdu ? JSON.parse(localEdu) : DEFAULT_EDUCATION;
+        return localEdu !== null ? JSON.parse(localEdu) : DEFAULT_EDUCATION;
     } else {
         const localProjects = localStorage.getItem("omnia_portfolio_projects");
-        if (localProjects) return JSON.parse(localProjects);
+        if (localProjects !== null) return JSON.parse(localProjects);
         const response = await fetch("./projects/projects.json");
         return await response.json();
     }
