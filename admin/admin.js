@@ -39,6 +39,10 @@ const DEFAULTS = {
         { title: "AI & Machine Learning Diploma", institution: "Zewail City of Science and Technology", period: "Completed | AI Training", image: "./assets/images/educat/school.jpg" }
     ],
     SKILLS: [
+        { name: "C#", icon: "https://img.icons8.com/color/48/000000/c-sharp-logo.png" },
+        { name: ".NET Core", icon: "https://img.icons8.com/color/48/000000/net-framework.png" },
+        { name: "ASP.NET Core", icon: "https://img.icons8.com/color/48/000000/code.png" },
+        { name: "REST API", icon: "https://img.icons8.com/color/48/000000/api.png" },
         { name: "Python", icon: "https://img.icons8.com/color/48/000000/python--v1.png" },
         { name: "SQL", icon: "https://img.icons8.com/color/48/000000/sql.png" },
         { name: "Power BI", icon: "https://img.icons8.com/color/48/000000/power-bi.png" },
@@ -59,7 +63,7 @@ const DEFAULTS = {
         { name: "Data Visualization", icon: "https://img.icons8.com/color/48/000000/combo-chart--v1.png" },
         { name: "Data Analysis", icon: "https://img.icons8.com/color/48/000000/data-configuration.png" },
         { name: "Git", icon: "https://img.icons8.com/color/48/000000/git.png" },
-        { name: "GitHub", "icon": "https://img.icons8.com/glyph-neue/48/ffffff/github.png" }
+        { name: "GitHub", icon: "https://img.icons8.com/glyph-neue/48/ffffff/github.png" }
     ],
     INFO: {
         name: "Omnia Ali Abdelmotleb",
