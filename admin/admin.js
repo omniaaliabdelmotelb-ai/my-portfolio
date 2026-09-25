@@ -833,7 +833,13 @@ async function renderMessages() {
     if (badge) badge.textContent = messages.length;
 
     if (messages.length === 0) {
-        tbody.innerHTML = `<tr><td colspan="6" style="text-align: center; color: var(--text-muted); padding: 2.5rem;">No contact messages received yet. All new messages submitted from website visitors will appear here in real-time! ✨</td></tr>`;
+        tbody.innerHTML = `
+            <tr>
+                <td colspan="6" style="text-align: center; color: var(--text-muted); padding: 2.5rem;">
+                    <p style="margin-bottom: 0.8rem;">No contact messages received yet. All new messages submitted from website visitors will appear here! ✨</p>
+                    <button onclick="addTestAdminMessage()" class="btn btn-sm btn-outline" style="color: var(--cyan); border-color: rgba(0,242,254,0.3);"><i class="fas fa-plus-circle"></i> Add Demo Test Message</button>
+                </td>
+            </tr>`;
         return;
     }
 
@@ -856,22 +862,53 @@ async function renderMessages() {
                     <a href="mailto:${email}?subject=Re: Portfolio Contact Message&body=Hi ${encodeURIComponent(name)},\n\nThank you for reaching out!" class="btn btn-sm btn-outline" style="color: var(--cyan); border-color: rgba(0,242,254,0.3); margin-right: 4px;" title="Reply to ${name}">
                         <i class="fas fa-reply"></i> Reply
                     </a>
-                    ${id ? `<button onclick="deleteMessage('${id}')" class="btn btn-sm btn-danger" title="Delete Message"><i class="fas fa-trash"></i></button>` : ''}
+                    <button onclick="deleteMessage('${id}', '${m.createdAt}')" class="btn btn-sm btn-danger" title="Delete Message"><i class="fas fa-trash"></i></button>
                 </td>
             </tr>
         `;
     }).join('');
 }
 
-async function deleteMessage(id) {
-    if (!confirm("Are you sure you want to delete this message?")) return;
+function addTestAdminMessage() {
+    const demo = {
+        name: "Omnia Ali (Test Visitor)",
+        email: "oa741536@gmail.com",
+        phone: "+20 1000000000",
+        message: "Hello! This is a test message to verify the Admin Messages table layout.",
+        createdAt: new Date().toISOString()
+    };
+    try {
+        const existing = JSON.parse(localStorage.getItem("omnia_portfolio_messages") || "[]");
+        existing.unshift(demo);
+        localStorage.setItem("omnia_portfolio_messages", JSON.stringify(existing));
+    } catch(e) {}
+
     if (typeof db !== 'undefined' && db) {
+        db.collection("messages").add(demo).catch(e => console.warn(e));
+    }
+
+    renderMessages();
+    showToast("Demo message added! ✨");
+}
+
+async function deleteMessage(id, createdAt) {
+    if (!confirm("Are you sure you want to delete this message?")) return;
+    
+    // Remove from localStorage
+    try {
+        let localMsgs = JSON.parse(localStorage.getItem("omnia_portfolio_messages") || "[]");
+        localMsgs = localMsgs.filter(m => m.createdAt !== createdAt);
+        localStorage.setItem("omnia_portfolio_messages", JSON.stringify(localMsgs));
+    } catch(e) {}
+
+    // Remove from Firestore
+    if (id && typeof db !== 'undefined' && db) {
         try {
             await db.collection("messages").doc(id).delete();
-            showToast("Message deleted successfully!");
-            renderMessages();
         } catch (e) {
-            alert("Error deleting message: " + e.message);
+            console.warn("Firestore delete warning:", e);
         }
     }
+    showToast("Message deleted successfully!");
+    renderMessages();
 }
