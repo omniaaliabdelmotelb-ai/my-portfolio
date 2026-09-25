@@ -19,13 +19,6 @@ const DEFAULTS = {
             image: "Taqa1_Dashboard",
             category: "Data Analysis",
             links: { view: "#", code: "#" }
-        },
-        {
-            name: "Customer Churn Analysis",
-            desc: "Completed an end-to-end Customer Churn Analysis project using the Telco Customer Churn dataset, combining Python for data analysis and Power BI for interactive dashboards.",
-            image: "churn_square_collage",
-            category: "Data Analysis",
-            links: { view: "#", code: "#" }
         }
     ],
     EXPERIENCE: [
