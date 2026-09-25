@@ -12,15 +12,7 @@ const KEYS = {
 
 // Fallback Defaults
 const DEFAULTS = {
-    PROJECTS: [
-        {
-            name: "TAQA GAS | Data Analytics",
-            desc: "Data analytics project 📊\nUsing Python, SQL, and Power BI, cleaning and exploring a customer dataset to extract key actionable insights.",
-            image: "Taqa1_Dashboard",
-            category: "Data Analysis",
-            links: { view: "#", code: "#" }
-        }
-    ],
+    PROJECTS: [],
     EXPERIENCE: [
         { company: "TAQA Gas", role: "Data Analyst & BI Trainee", period: "Corporate Training Program", desc: "Corporate Training Program focusing on Data Analysis and BI Dashboards." },
         { company: "ITI (Information Technology Institute)", role: "Mobile Application Developer | Training", period: "Flutter & Dart Development with Firebase", desc: "Flutter & Dart Development with Firebase real-time integration." },

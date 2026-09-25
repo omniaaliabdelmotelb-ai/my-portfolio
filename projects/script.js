@@ -146,6 +146,11 @@ async function getProjects() {
 
 function showProjects(projects) {
     let projectsContainer = document.querySelector(".work .box-container");
+    if (!projectsContainer) return;
+    if (!projects || projects.length === 0) {
+        projectsContainer.innerHTML = `<div style="text-align: center; color: #94a3b8; padding: 2.5rem; font-size: 1.5rem; width: 100%;">No projects added yet. Add projects from the Admin panel! ✨</div>`;
+        return;
+    }
     let projectsHTML = "";
     
     // Dynamic Filter buttons population if categories exist
