@@ -181,7 +181,6 @@ const DEFAULT_INFO = {
     social: {
         linkedin: "https://www.linkedin.com/",
         github: "https://github.com/",
-        kaggle: "https://www.kaggle.com/",
         whatsapp: "https://wa.me/201111394981",
         telegram: "https://t.me/+201111394981"
     }
@@ -330,7 +329,6 @@ function showInfo(info) {
     if (info.social) {
         document.querySelectorAll(".social-icons .linkedin, .share .fa-linkedin").forEach(el => el.href = info.social.linkedin || "#");
         document.querySelectorAll(".social-icons .github, .share .fa-github").forEach(el => el.href = info.social.github || "#");
-        document.querySelectorAll(".social-icons .kaggle, .share .fa-kaggle").forEach(el => el.href = info.social.kaggle || "#");
         document.querySelectorAll(".social-icons .whatsapp, .share .fa-whatsapp").forEach(el => el.href = info.social.whatsapp || "https://wa.me/201111394981");
         document.querySelectorAll(".social-icons .telegram, .share .fa-telegram-plane").forEach(el => el.href = info.social.telegram || "https://t.me/+201111394981");
         document.querySelectorAll(".share .fa-envelope").forEach(el => el.href = `mailto:${info.email}`);

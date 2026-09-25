@@ -159,7 +159,6 @@ function updatePageInfo() {
     if (info.social) {
         document.querySelectorAll(".share .fa-linkedin").forEach(el => el.href = info.social.linkedin || "#");
         document.querySelectorAll(".share .fa-github").forEach(el => el.href = info.social.github || "#");
-        document.querySelectorAll(".share .fa-kaggle").forEach(el => el.href = info.social.kaggle || "#");
         document.querySelectorAll(".share .fa-whatsapp").forEach(el => el.href = info.social.whatsapp || "https://wa.me/201111394981");
         document.querySelectorAll(".share .fa-telegram-plane").forEach(el => el.href = info.social.telegram || "https://t.me/+201111394981");
     }
