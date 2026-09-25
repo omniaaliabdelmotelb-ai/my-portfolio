@@ -213,6 +213,13 @@ async function fetchData(type = "skills") {
 
 function showInfo(info) {
     if (!info) return;
+    // Name & Title
+    const aboutTitleElem = document.querySelector(".about .content h3");
+    if (aboutTitleElem && info.name) aboutTitleElem.textContent = `I'm ${info.name}`;
+
+    const aboutTagElem = document.querySelector(".about .content .tag");
+    if (aboutTagElem && info.title) aboutTagElem.textContent = info.title;
+
     // Bio
     const bioElem = document.querySelector(".about .content p");
     if (bioElem && info.bio) bioElem.textContent = info.bio;
